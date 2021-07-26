@@ -17,4 +17,14 @@ pipeline {
 				}
 			}	
 	}
+	always{
+		echo "Always Run"
+	}
+	success{
+		echo "Success"
+	}
+	failure{
+		echo "Failure"
+	}
+
 }
