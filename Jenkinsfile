@@ -1,11 +1,16 @@
 pipeline {
-	sh "sudo chown jenkins: -R \$PWD/"
-	
-	agent {docker { image 'maven:3.6.3'}}
+
+   environment{
+	   dockerHome = tool 'MyDocker'
+	   mavenHome = tool 'MyMaven'
+	   PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
+   }
+
 	stages{
 		stage('Build') {
 				steps{
 					sh 'mvn --version'
+					sh 'docker --version'
 					echo "Build"
 				}
 			}
