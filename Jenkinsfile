@@ -1,8 +1,7 @@
 pipeline {
-	agent {docker { image 'maven:3.6.3'
-					args '-u root:root'}
-	 
-					}
+	sh "sudo chown jenkins: -R \$PWD/"
+	
+	agent {docker { image 'maven:3.6.3'}}
 	stages{
 		stage('Build') {
 				steps{
