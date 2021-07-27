@@ -32,13 +32,13 @@ pipeline {
 		stage('Test') {
 				steps{
 					echo "---------------------- Test Execution------------------------------"
-					sh 'mvn test'
+					//sh 'mvn test'
 				}
 			}
 		stage('Integration Test') {
 				steps{
 					echo "---------------------- Integration Test Execution------------------------------"
-					sh 'mvn failsafe:integration-test failsafe:verify'
+					//sh 'mvn failsafe:integration-test failsafe:verify'
 				}
 			}
 		stage('Package') {
