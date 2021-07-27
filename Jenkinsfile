@@ -40,6 +40,33 @@ pipeline {
 					echo "---------------------- Integration Test Execution------------------------------"
 					sh 'mvn failsafe:integration-test failsafe:verify'
 				}
+			}
+		stage('Package') {
+				steps{
+					echo "---------------------- Building a Package-----------------------------"
+					sh 'mvn package -DskipTests'
+				}
+			}	
+		stage('Build Docker Image'){
+				steps{
+					echo "---------------------- Build a Docker Image------------------------------"
+					 //"docker build - t anupamattrey/currency-exchange-devops:$env.BUILD_TAG"	
+					 script{
+						 dockerImage = docker.build("anupamattrey/currency-exchange-devops:${env.BUILD_TAG}")
+					 }
+				}
+			}
+		stage('Push Docker Image'){
+				steps{
+					script{
+						docker.withRegistry('','Docker_Id'){
+						dockerImage.push()
+						dockerImage.push('latest')
+						}
+						
+					}
+
+				}
 			}	
 	}
 	post{
