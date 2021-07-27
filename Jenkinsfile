@@ -13,7 +13,7 @@ pipeline {
 			}
 
 		}
-		stage('Build') {
+		stage('Checkout') {
 				steps{
 					sh 'mvn --version'
 					sh 'docker --version'
@@ -23,14 +23,22 @@ pipeline {
 					echo "BUILD_ID - $env.BUILD_ID"
 				}
 			}
+		stage('Compile') {
+				steps{
+					echo "---------------------- Code Compile ------------------------------"
+					sh ' mvn clean compile'
+				}
+			}
 		stage('Test') {
 				steps{
-					echo "Test"
+					echo "---------------------- Test Execution------------------------------"
+					sh 'mvn test'
 				}
 			}
 		stage('Integration Test') {
 				steps{
-					echo "Integration Test"
+					echo "---------------------- Integration Test Execution------------------------------"
+					sh 'mvn failsafe:integration-test failsafe:verify'
 				}
 			}	
 	}
